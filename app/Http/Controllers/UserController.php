@@ -46,6 +46,7 @@ class UserController extends Controller
        User::create($data);
        //添加用户
        $status = \Auth::attempt(['email'=>$request->email,'password' =>$request->password]);
+       session()->flash('success','注册成功，已经为你自动登录系统');
        //自动登录
        return redirect()->route('home');
     }

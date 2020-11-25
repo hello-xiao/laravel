@@ -27,13 +27,17 @@
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="搜索" aria-label="Search">
                 <button class="btn btn-success my-2 my-sm-0 mr-2" type="submit">搜索</button>
-                <a href="{{route('user.create')}}" class="btn btn-info my-2 my-sm-0 mr-2">注册</a>
-                <a class="btn btn-primary my-2 my-sm-0" mr-2>登录</a>
-
+                @auth
+                    <a href="{{route('logout')}}" class="btn btn-info my-2 my-sm-0 mr-2">退出</a>
+                @else
+                    <a href="{{route('user.create')}}" class="btn btn-info my-2 my-sm-0 mr-2">注册</a>
+                    <a href="{{route('login')}}" class="btn btn-primary my-2 my-sm-0" mr-2>登录</a>
+                @endauth
             </form>
         </div>
     </nav>
     @include('layouts._errors')
+    @include('layouts._message')
     @yield('content')
 </div>
 <script src="../js/app.js"></script>
