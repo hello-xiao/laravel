@@ -22,13 +22,17 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="#">聆听zhe</a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{route('user.index')}}">用户列表</a>
+                </li>
 
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="搜索" aria-label="Search">
                 <button class="btn btn-success my-2 my-sm-0 mr-2" type="submit">搜索</button>
                 @auth
-                    <a href="{{route('logout')}}" class="btn btn-info my-2 my-sm-0 mr-2">退出</a>
+                    <a href="{{route('user.edit',auth()->user())}}" class="btn btn-info my-2 my-sm-0 mr-2">修改</a>
+                    <a href="{{route('logout')}}" class="btn btn-danger my-2 my-sm-0 mr-2">退出</a>
                 @else
                     <a href="{{route('user.create')}}" class="btn btn-info my-2 my-sm-0 mr-2">注册</a>
                     <a href="{{route('login')}}" class="btn btn-primary my-2 my-sm-0" mr-2>登录</a>
