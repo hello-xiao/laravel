@@ -9,9 +9,9 @@
                 <thead>
                 <tr>
                     <th>编号</th>
-                    <th>昵称</th>
-                    <th>邮箱</th>
-                    <th width="200">操作</th>
+                    <th style="padding-left: 50px">昵称</th>
+                    <th style="padding-left: 80px">邮箱</th>
+                    <th width="200" style="padding-left: 50px">操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -23,7 +23,15 @@
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
                             <a href="{{route('user.show',$user)}}" class="btn btn-info">查看</a>
-                            <button type="button" class="btn btn-danger">删除</button>
+                            @can('update',$user)
+                                <a href="{{route('user.edit',$user)}}" class="btn btn-success">修改</a>
+                            @endcan
+                            @can('delete',$user)
+                                <form action="{{route('user.destroy',$user)}}" method="post">
+                                     @csrf @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">删除</button>
+                                </form>
+                            @endcan
                         </div>
                     </td>
                 </tr>

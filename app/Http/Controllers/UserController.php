@@ -3,12 +3,23 @@
 namespace App\Http\Controllers;
 
 
+use App\Mail\RegMail;
 use Auth;
 
 use Illuminate\Http\Request;
 use App\Models\User;
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth',[
+            'except'=>['index','show','create','store','confirmEmailToken']
+        ]);
+        $this->middleware('guest',[
+            'only'=>['create','store']
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -45,11 +56,12 @@ class UserController extends Controller
                 'password'=>'required|min:6|max:16|confirmed'
         ]);
        $data['password'] = bcrypt($data['password']);
-       User::create($data);
+
        //添加用户
-       $status = \Auth::attempt(['email'=>$request->email,'password' =>$request->password]);
-       session()->flash('success','注册成功，已经为你自动登录系统');
-       //自动登录
+       $user = User::create($data);
+        //发送注册邮件
+        \Mail::to($user)->send(new RegMail($user));
+       session()->flash('success','请查看邮箱完成注册验证');
        return redirect()->route('home');
     }
 
@@ -74,6 +86,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
         //
+        $this->authorize('update',$user);
+
         return view('user.edit',compact('user'));
     }
 
@@ -108,5 +122,23 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+        $this->authorize('delete',$user);
+        $user->delete();
+        session()->flash('success','删除成功');
+        return redirect()->route('user.index');
+    }
+    //注册邮箱验证
+    public function confirmEmailToken($token)
+    {
+       $user = User::where('email_token', $token)->first();
+       if($user) {
+           $user->email_active = true;
+           $user->save();
+           session()->flash('验证成功');
+           \Auth::login($user);
+           return redirect('/');
+       }
+       session()->flash('danger','邮箱验证失败');
+       return redirect('/');
     }
 }

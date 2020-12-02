@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PasswordController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\UserController;
@@ -22,3 +23,12 @@ Route::resource('user',UserController::class);
 Route::get('logout', [LoginController::class,'logout'])->name('logout');
 Route::get('login', [LoginController::class,'login'])->name('login');
 Route::post('login',[LoginController::class,'store'])->name('login');
+
+//邮箱验证
+Route::get('confirmEmailToken/{token}',[UserController::class,'confirmEmailToken'])->name('confirmEmailToken');
+
+//更改密码
+Route::get('FindPasswordEmail',[PasswordController::class,'email'])->name('FindPasswordEmail');
+Route::post('FindPasswordSend',[PasswordController::class,'send'])->name('FindPasswordSend');
+Route::get('FindPasswordEdit/{token}',[PasswordController::class,'edit'])->name('FindPasswordEdit');
+Route::post('FindPasswordUpdate',[PasswordController::class,'update'])->name('FindPasswordUpdate');
