@@ -31,6 +31,7 @@
                 <input class="form-control mr-sm-2" type="search" placeholder="搜索" aria-label="Search">
                 <button class="btn btn-success my-2 my-sm-0 mr-2" type="submit">搜索</button>
                 @auth
+                    <a href="{{route('user.show',auth()->user())}}" class="btn btn-primary my-2 my-sm-0 mr-2">个人空间</a>
                     <a href="{{route('user.edit',auth()->user())}}" class="btn btn-info my-2 my-sm-0 mr-2">修改</a>
                     <a href="{{route('logout')}}" class="btn btn-danger my-2 my-sm-0 mr-2">退出</a>
                 @else

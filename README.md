@@ -17,4 +17,8 @@
 
 *通过`auth()`获取当前登录的用户                           href="{{route('logout')}}" class="btn btn-info my-2 my-sm-0 mr-2">退出
 
+##路由命名空间更新(!!!)
+use App\Http\Controllers\UserController;
+
+Route::get('/users', [UserController::class, 'index']);
         

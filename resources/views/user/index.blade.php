@@ -11,7 +11,7 @@
                     <th>编号</th>
                     <th style="padding-left: 50px">昵称</th>
                     <th style="padding-left: 80px">邮箱</th>
-                    <th width="200" style="padding-left: 50px">操作</th>
+                    <th width="200" style="text-align:center;">操作</th>
                 </tr>
                 </thead>
                 <tbody>
